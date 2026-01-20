@@ -25,3 +25,6 @@ class StudentWithWork extends Student{
 const stu2 = new Student("Lali");
 stu2.doWork();
 console.log(stu2);
+
+
+
