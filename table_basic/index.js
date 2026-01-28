@@ -68,29 +68,58 @@ const colspanBodyArr = [
 // renderColspanBody(makeTableBodyWithHeader(colspanHeaderArr), colspanBodyArr)
 // renderRowspanBody(makeTableBodyWithHeader(rowspanHeaderArr), rowspanBodyArr)
 
-
+/** 
+ * Tábla alaposztály
+ */
 class Table{
     #tbody
+    /**
+     * @param {HeaderType[]} headerArr
+     */
     constructor(headerArr){
         this.#tbody = makeTableBodyWithHeader(headerArr);
     }
+    /**
+     * @type {HTMLTableSectionElement}
+     */
     get tbody() {return this.#tbody}
+    /**
+     * @param {Function} callback
+     */
     appendRow(callback){callback(this.#tbody)}
 }
 
+/**
+ * Colspan táblázat osztály
+ */
 class ColSpanTable extends Table{
+    /**
+     * @param {HeaderType[]} headerArr
+     */
     constructor(headerArr){
         super(headerArr)
     }
+    /**
+     * @param {ColspanRowType[]} bodyArr
+     */
     render(bodyArr){
         renderColspanBody(this.tbody, bodyArr)
     }
 }
 
+/**
+ * Rowspan táblázat osztály
+ */
 class RowSpanTable extends Table{
+    /**
+     * @param {HeaderType[]} headerArr
+     */
     constructor(headerArr){
         super(headerArr)
     }
+    /**
+     * @param {RowspanRowType[]} bodyArr
+     */
     render(bodyArr){
         renderRowspanBody(this.tbody, bodyArr)
     }
@@ -103,13 +132,20 @@ const rowSpanTable = new RowSpanTable(rowspanHeaderArr);
 rowSpanTable.render(rowspanBodyArr);
 
 const button = document.createElement("button");
-button.innerText = "Gomb";
+button.innerText = "Gomb row";
 document.body.appendChild(button);
 
 
 button.addEventListener('click',handleButtonEvent.bind(rowSpanTable))
 
+/**
+ * Rowspan sor hozzáadása
+ * @param {Event} e
+ */
 function handleButtonEvent(e){
+    /**
+     * @type {RowspanRowType}
+     */
     const obj = {
         author: "Thomas Mann",
         title1: "Mario és a varázsló",
@@ -132,3 +168,53 @@ function handleButtonEvent(e){
         tr.appendChild(td3);
     })
 }
+
+/**
+ * Colspan gomb létrehozása
+ */
+const colspanButton = document.createElement('button');
+colspanButton.innerText = "Gomb col";
+document.body.appendChild(colspanButton);
+
+/**
+ * Colspan sor hozzáadása
+ * @param {Event} e
+ */
+colspanButton.addEventListener('click', function(e) {
+    e.preventDefault();
+
+    /**
+     * @type {ColspanRowType}
+     */
+    const obj = {
+        author: "Oscar Wilde",
+        title: "Az Importance of Being Earnest",
+        concepts: "Dráma",
+        concepts2: "Satíra"
+    };
+
+    colSpanTable.appendRow(function(body) {
+        const tr = document.createElement('tr');
+        body.appendChild(tr);
+
+        const td1 = document.createElement('td');
+        td1.innerText = obj.author;
+        tr.appendChild(td1);
+
+        const td2 = document.createElement('td');
+        td2.innerText = obj.title;
+        tr.appendChild(td2);
+
+        const td3 = document.createElement('td');
+        td3.innerText = obj.concepts;
+        tr.appendChild(td3);
+
+        if(obj.concepts2) {
+            const td4 = document.createElement('td');
+            td4.innerText = obj.concepts2;
+            tr.appendChild(td4);
+        }else {
+            td3.colSpan = 2;
+        }
+    })
+})
