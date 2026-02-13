@@ -38,3 +38,25 @@ class ElektromosAuto extends Auto {
 const skoda = new Auto("Skoda");
 skoda.gyorsit();
 console.log(skoda);
+
+
+class Student{
+    constructor(név,kor){
+        this.name = név;
+        this.age = kor;
+        this.askedQuestionNum = 0;
+    }
+    askedQuestion(){
+        this.askedQuestionNum++;
+    }
+}
+
+class Mentor extends Student{
+    constructor(név, kor, tapasztalat){
+        super(név, kor);
+        this.tapasztalat = tapasztalat;
+    }
+}
+const MentorEgy = new Mentor("Gábor", 30, "JavaScript");
+MentorEgy.askedQuestion();
+console.log(MentorEgy);
