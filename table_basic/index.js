@@ -2,6 +2,9 @@
  * @typedef {{author: string, title1: string, concepts1: string, title2?: string,  concepts2?: string}} RowspanRowType  
  * @typedef {{author: string, title: string, concepts: string, concepts2?: string}} ColspanRowType
  * @typedef {{name: string, colSpan?: number}} HeaderType
+ * @callback RenderRowCallBack
+ * @param {HTMLTableSectionElement} RenderRowCallBack
+ * 
 */
 
 /** @type {HeaderType[]}  */
@@ -68,60 +71,46 @@ const colspanBodyArr = [
 // renderColspanBody(makeTableBodyWithHeader(colspanHeaderArr), colspanBodyArr)
 // renderRowspanBody(makeTableBodyWithHeader(rowspanHeaderArr), rowspanBodyArr)
 
-/** 
- * Tábla alaposztály
- */
-class Table{
-    #tbody
+class Table {
+    #tbody;
     /**
-     * @param {HeaderType[]} headerArr
+     * @param {HeaderType[]} headerArr 
      */
-    constructor(headerArr){
+    constructor(headerArr) {
         this.#tbody = makeTableBodyWithHeader(headerArr);
     }
+    get tbody() {
+        return this.#tbody;
+    }
     /**
-     * @type {HTMLTableSectionElement}
+     * @param {RenderRowCallBack} callback 
      */
-    get tbody() {return this.#tbody}
-    /**
-     * @param {Function} callback
-     */
-    appendRow(callback){callback(this.#tbody)}
+    appendRow(callback) {
+        callback(this.#tbody);
+    }
 }
 
-/**
- * Colspan táblázat osztály
- */
-class ColSpanTable extends Table{
-    /**
-     * @param {HeaderType[]} headerArr
-     */
-    constructor(headerArr){
-        super(headerArr)
+class ColSpanTable extends Table {
+    constructor(headerArr) {
+        super(headerArr);
     }
     /**
      * @param {ColspanRowType[]} bodyArr
      */
-    render(bodyArr){
-        renderColspanBody(this.tbody, bodyArr)
+    render(bodyArr) {
+        renderColspanBody(this.tbody, bodyArr);
     }
 }
 
-/**
- * Rowspan táblázat osztály
- */
-class RowSpanTable extends Table{
-    /**
-     * @param {HeaderType[]} headerArr
-     */
-    constructor(headerArr){
-        super(headerArr)
+class RowSpanTable extends Table {
+    constructor(headerArr) {
+        super(headerArr);
     }
     /**
      * @param {RowspanRowType[]} bodyArr
      */
-    render(bodyArr){
-        renderRowspanBody(this.tbody, bodyArr)
+    render(bodyArr) {
+        renderRowspanBody(this.tbody, bodyArr);
     }
 }
 
@@ -131,69 +120,24 @@ colSpanTable.render(colspanBodyArr);
 const rowSpanTable = new RowSpanTable(rowspanHeaderArr);
 rowSpanTable.render(rowspanBodyArr);
 
-const button = document.createElement("button");
-button.innerText = "Gomb row";
+const button = document.createElement('button');
+button.innerText = "RowSpan Hozzáadás"
 document.body.appendChild(button);
 
-
-button.addEventListener('click',handleButtonEvent.bind(rowSpanTable))
+button.addEventListener('click', onClickButton.bind(rowSpanTable));
 
 /**
- * Rowspan sor hozzáadása
- * @param {Event} e
+ * 
+ * @this {Table} a táblázatpéldány 
  */
-function handleButtonEvent(e){
-    /**
-     * @type {RowspanRowType}
-     */
+function onClickButton(e) {
+    /** @type {RowspanRowType[]}  */
     const obj = {
         author: "Thomas Mann",
-        title1: "Mario és a varázsló",
-        concepts1: "kisregény" 
+        title: "Mario és a varázsló",
+        concepts: "kisregény" 
     }
-    this.appendRow(function(body){
-        const tr = document.createElement('tr');
-        body.appendChild(tr);
-
-        const td1 = document.createElement('td');
-        td1.innerText = obj.author;
-        tr.appendChild(td1);
-
-        const td2 = document.createElement('td');
-        td2.innerText = obj.author;
-        tr.appendChild(td2);
-
-        const td3 = document.createElement('td');
-        td3.innerText = obj.author;
-        tr.appendChild(td3);
-    })
-}
-
-/**
- * Colspan gomb létrehozása
- */
-const colspanButton = document.createElement('button');
-colspanButton.innerText = "Gomb col";
-document.body.appendChild(colspanButton);
-
-/**
- * Colspan sor hozzáadása
- * @param {Event} e
- */
-colspanButton.addEventListener('click', function(e) {
-    e.preventDefault();
-
-    /**
-     * @type {ColspanRowType}
-     */
-    const obj = {
-        author: "Oscar Wilde",
-        title: "Az Importance of Being Earnest",
-        concepts: "Dráma",
-        concepts2: "Satíra"
-    };
-
-    colSpanTable.appendRow(function(body) {
+    this.appendRow(function(body) {
         const tr = document.createElement('tr');
         body.appendChild(tr);
 
@@ -208,13 +152,5 @@ colspanButton.addEventListener('click', function(e) {
         const td3 = document.createElement('td');
         td3.innerText = obj.concepts;
         tr.appendChild(td3);
-
-        if(obj.concepts2) {
-            const td4 = document.createElement('td');
-            td4.innerText = obj.concepts2;
-            tr.appendChild(td4);
-        }else {
-            td3.colSpan = 2;
-        }
     })
-})
+}

@@ -1,40 +1,64 @@
-/*
-//=====Hazi feladat 1======//
-function Auto(marka) {
-    this.marka = marka;
-    this.speed = 0;
-}
-Auto.prototype.gyorsit = function() {
-    this.speed += 10;
-};
+// Function
+console.log("---- Function ----");
 
-function ElektromosAuto(marka, battery) {
-    Auto.call(this, marka);
-    this.batteryLevel = battery;
-}
-Object.setPrototypeOf(ElektromosAuto.prototype, Auto.prototype);
-const bmw = new Auto("Bmw");
-bmw.gyorsit();
-console.log(bmw);
-*/
-
-//=====Hazi feladat 2======//
-class Auto {
-    constructor(marka) {
-        this.marka = marka;
-        this.speed = 0;
-    }
-    gyorsit() {
-        this.speed += 10;
-    }
+function Plate(color, size) {
+    this.color = color;
+    this.size = size;
 }
 
-class ElektromosAuto extends Auto {
-    constructor(marka, battery) {
-        super(marka);
-        this.batteryLevel = battery;
+function SmallPlate(color) {
+    Plate.call(this, color, "kicsi");
+}
+
+function LargePlate(color) {
+    Plate.call(this, color, "nagy");
+}
+
+Object.setPrototypeOf(SmallPlate.prototype, Plate.prototype);
+Object.setPrototypeOf(LargePlate.prototype, Plate.prototype);
+
+const plate1 = new SmallPlate("zöld");
+const plate2 = new SmallPlate("piros");
+const plate3 = new LargePlate("kék");
+console.log(plate1);
+console.log(plate2);
+console.log(plate3);
+
+function Glass() {}
+
+const glass1 = new Glass();
+console.log(glass1);
+
+// Class
+console.log("---- Class ----");
+
+class PlateClass {
+    constructor(color, size) {
+        this.color = color;
+        this.size = size;
     }
 }
-const skoda = new Auto("Skoda");
-skoda.gyorsit();
-console.log(skoda);
+
+class SmallPlateClass extends PlateClass {
+    constructor(color) {
+        super(color, "kicsi");
+    }
+}
+
+class LargePlateClass extends PlateClass {
+    constructor(color) {
+        super(color, "nagy");
+    }
+}
+
+const plate4 = new SmallPlateClass("zöld");
+const plate5 = new SmallPlateClass("piros");
+const plate6 = new LargePlateClass("kék");
+console.log(plate4);
+console.log(plate5);
+console.log(plate6);
+
+class GlassClass {}
+
+const glass2 = new GlassClass();
+console.log(glass2);

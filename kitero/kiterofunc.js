@@ -1,23 +1,19 @@
-/**
- * @param {} name 
- * The name of the student
- */
 function Student(name){
     this.name = name;
     this.askedQuestionNum = 0;
 }
 
-Student.prototype.askedQuestion = function(){
+Student.prototype.askQuestion = function(){
     console.log("???");
     this.askedQuestionNum++;
 }
 
-const stu1 = new Student("Benji")
-const stu2 = new Student("Levi")
+const stu1 = new Student("Benjamin")
+const stu2 = new Student("Levente")
 console.log(stu1);
 console.log(stu2);
 
-stu1.askedQuestion()
+stu1.askQuestion()
 console.log(stu1);
 
 
@@ -30,11 +26,9 @@ StudentWithWork.prototype.doWork = function(){
 }
 Object.setPrototypeOf(StudentWithWork.prototype,Student.prototype)
 
-const stu3 = new StudentWithWork("Diglet");
-stu3.askedQuestion();
+const stu3 = new StudentWithWork("Pikachu");
+stu3.askQuestion();
 console.log(stu3);
 
 stu3.doWork();
 console.log(stu3);
-
-

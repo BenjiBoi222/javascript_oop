@@ -3,13 +3,13 @@ class Student{
         this.name = name;
         this.askedQuestionNum = 0;
     }
-    askedQuestion(){
+    askQuestion(){
         this.askedQuestionNum++;
     }
 }
 
-const stu1 = new Student("Béla");
-stu1.askedQuestion();
+const stu1 = new Student("Feri");
+stu1.askQuestion();
 console.log(stu1);
 
 class StudentWithWork extends Student{
@@ -22,9 +22,6 @@ class StudentWithWork extends Student{
     }
 }
 
-const stu2 = new Student("Lali");
+const stu2 = new StudentWithWork("Jani");
 stu2.doWork();
 console.log(stu2);
-
-
-

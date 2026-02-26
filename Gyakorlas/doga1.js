@@ -87,7 +87,7 @@ button.addEventListener('click',() => clickOnButton(hu1))
 function Majom(name, type){
     this.name = name;
     this.type = type;
-
+    
     this.tellType = function(){
         console.log(name + " monkey is a " + type);
     }
