@@ -1,6 +1,6 @@
 import { AuthorManager } from "./manager.js";
 import { createInputAndErrorDiv } from "./gomszab.min.js";
-import { ViewElement } from "./viewlement.js";
+import { ViewElement } from "./viewelement.js";
 
 class FormController extends ViewElement {
     /**

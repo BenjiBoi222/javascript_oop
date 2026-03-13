@@ -3,7 +3,7 @@
  * @typedef {{id: string, label: string, name: string}} FormFieldType
  */
 
-import { FormController } from "./form.js";
+import { FormController } from "./from.js";
 import { AuthorManager } from "./manager.js";
 import { Navbar } from "./navigationbar.js"
 import { TableView } from "./table.js";
