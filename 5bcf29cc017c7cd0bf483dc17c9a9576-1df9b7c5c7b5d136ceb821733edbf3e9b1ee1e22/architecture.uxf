@@ -1,0 +1,73 @@
+<diagram program="umletino" version="15.1"><zoom_level>11</zoom_level><element><id>UMLClass</id><coordinates><x>276</x><y>891</y><w>385</w><h>220</h></coordinates><panel_attributes>QuizManager
+--
+- currentQuestionNumber: number
+- questions: QuestionType []
+- questionAnswers: string[]
+- nextQuestionCallback: NextQuestionCallback
+- finishResultCallback: FinishResultCallback
+--
++ constructor(questions: QuestionType)
++ startQuiz() : void
++ nextQuestion(answer: string): void
++ set nextQuestionCallback(value: NextQuestionCallback)
++ set finishResultCallback(value: FinishResultCallback)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>265</x><y>11</y><w>330</w><h>176</h></coordinates><panel_attributes>View
+--
+- manager: QuizManager
+- container: HtmlDivelement
+--
++ constructor(manager: QuizManager)
++appendTo(parent: HTMLElement) : void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>232</x><y>473</y><w>231</w><h>77</h></coordinates><panel_attributes>NextQuestionCallback
+--
+(question: QuestionViewType):void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>496</x><y>473</y><w>198</w><h>77</h></coordinates><panel_attributes>FinishResultCallback
+--
+(result: string):void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>144</x><y>66</y><w>154</w><h>913</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>120;810;10;810;10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>353</x><y>176</y><w>165</w><h>319</h></coordinates><panel_attributes>lt=&lt;.
+Implementálja, hogy 
+hogyan jelenjen meg
+a következő kérdés</panel_attributes><additional_attributes>10;270;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>331</x><y>539</y><w>187</w><h>374</h></coordinates><panel_attributes>lt=&lt;-
+Meghívja a stratQuiz,
+hogy megjelenjen 
+az első kérdés
+Meghívja a 
+nextQuestion függvény, 
+ha van még kérdés</panel_attributes><additional_attributes>10;10;10;320</additional_attributes></element><element><id>UMLClass</id><coordinates><x>177</x><y>693</y><w>132</w><h>77</h></coordinates><panel_attributes>QuestionViewType
+--
++ question: string
++ answers: string[]</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>210</x><y>506</y><w>44</w><h>209</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>20;10;10;10;10;170</additional_attributes></element><element><id>Relation</id><coordinates><x>562</x><y>539</y><w>187</w><h>374</h></coordinates><panel_attributes>lt=&lt;-
+Meghívja a nextQuestion,
+ha nincs több kérdés</panel_attributes><additional_attributes>10;10;10;320</additional_attributes></element><element><id>UMLClass</id><coordinates><x>804</x><y>935</y><w>242</w><h>110</h></coordinates><panel_attributes>QuestionType
+--
++ question: string
++ answers: string[]
++ rightAnswer: string</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>650</x><y>990</y><w>176</w><h>44</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..*</panel_attributes><additional_attributes>140;10;10;10</additional_attributes></element><element><id>UMLNote</id><coordinates><x>144</x><y>1155</y><w>506</w><h>220</h></coordinates><panel_attributes>A nextQuestion meghívásakor eltároljuk a a bejövő
+anwer paraméter értékét a questionAnswers 
+string tömbben, majd megvizsgáljuk,
+hogy van-e még kérdés. Ha van akkor incrementáljuk
+a currentQuestionNumbert, és az annyiadik elemével
+a questions tömbnek meghívjuk a nextQuestionCallback-et.
+Ha nincs több kérdés, 
+Megszámoljuk hány olyan elem van a questionAnswers tömbben,
+ami megegyezik a vele megegyező indexű questions tömb elem rightAnswer
+tulajdonságának értékével, és a finishResultCallback-et 
+hívjuk meg az eredménnyel.
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>639</x><y>0</y><w>594</w><h>264</h></coordinates><panel_attributes>A konstruktorban létrehozunk egy div-et a containernek.
+Mindkét callback implementációjában első lépésben töröljük
+ennek a divnek a tartalmát.
+a nextQuestionCallbackben kapott QuestionViewType
+típusú elem alapján létrehozunk egy div elemet question css osztállyal, amelyen
+belül egy span tartalmazza a kérdés szövegét.
+Létrehozunk egy div elemet answers css osztállyal, majd azon belül létrehozunk
+gombokat, amelyek felirata az aktuális válasz,
+ és a click eseménynél meghívjuk a manager nextQuestion kérdését.
+A finishResultCallback-en belül létrehozunk egy 
+div elemet result css osztállyal, és beállítjuk tartalmának a paraméterben kapott szöveget.
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>1046</x><y>594</y><w>385</w><h>242</h></coordinates><panel_attributes>Oldal betöltéskor példányosítjuk a managert a json 
+segítségével. Példányosítjuk a View-t a manager
+segítségével és hozzácsatoljuk a document.body-hoz.
+Majd meghívjuk a manager startQuiz függvényét
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>683</x><y>1155</y><w>264</w><h>220</h></coordinates><panel_attributes>A konstruktorban inicializáljuk
+a currentQustionnumbert 0-val
+a questionsAnswers üres tömbbel
+a questionsnek meg a paraméter alpján
+adunk értéket.
+bg=blue</panel_attributes><additional_attributes></additional_attributes></element></diagram>
