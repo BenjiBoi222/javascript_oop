@@ -3,7 +3,7 @@
  * @typedef {{id: string, label: string, name: string}} FormFieldType
  */
 
-import { FormController } from "./from.js";
+import { FormController } from "./form.js";
 import { AuthorManager } from "./manager.js";
 import { Navbar } from "./navigationbar.js"
 import { TableView } from "./table.js";
@@ -36,4 +36,3 @@ const form = new FormController("tableForm", formFields, manager);
 form.appendTo(document.body);
 navbar.addViewElement("Form", form)
 navbar.activate("table");
-manager.getAllElement();

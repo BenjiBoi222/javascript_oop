@@ -2,32 +2,24 @@
  * @callback TableCallback
  * @param {Author[]} authorList
  * @returns {void}
+ * 
+ * @callback AddElementResultCallback
+ * @param {string} resultMessage
+ * @returns {void}
  */
 
 class AuthorManager {
-    /** @type {Author[]} */
+    /**@type {Author[]} */
     #authorList;
-
-    /**
-     * @param {TableCallback}
-     */
+    /**@type {TableCallback} */
     #tableCallback;
-
-    /**
-     * @param {TableCallback} tableCallback
-     */
-    set tableCallback(value) {
-        this.#tableCallback = value;
-    }
-
-
+    /**@type {AddElementResultCallback} */
+    #addElementResultCallback;
     constructor() {
         this.#authorList = [];
     }
-
     /**
-     * 
-     * @param {import(".").AuthorType} elemnt 
+     * @param {import(".").AuthorType} element 
      */
     addElement(element) {
         const author = new Author();
@@ -35,54 +27,75 @@ class AuthorManager {
         author.name = element.author;
         author.work = element.work;
         author.concept = element.concept;
+        if(author.validate()) {
         this.#authorList.push(author);
+        this.#addElementResultCallback("Sikeres elem felvétel!");
+        } else {
+            this.#addElementResultCallback("Sikertelen elem felvétel!");
+        }
     }
-
     /**
-     * @returns {void} 
+     * @returns {void}
      */
-    getAllElement(){
+    getAllElement() {
         this.#tableCallback(this.#authorList);
+    }
+    /**
+     * @param {TableCallback} value 
+     */
+    set tableCallback(value) {
+        this.#tableCallback = value;
+    }
+    /**
+     * @param {AddElementResultCallback} value 
+     */
+    set addElementResultCallback(value) {
+        this.#addElementResultCallback = value;
     }
 }
 
 class Author {
-    /** @type {string} */
+    /**@type {string} */
     #id;
-    /** @type {string} */
+    /**@type {string} */
     #name;
-    /** @type {string} */
+    /**@type {string} */
     #work;
-    /** @type {string} */
+    /**@type {string} */
     #concept;
+    constructor() {
 
-    constructor() {}
-
+    }
     get id() {
         return this.#id;
-    }
-    set id(value){
-        this.#id = value;
     }
     get name() {
         return this.#name;
     }
-    set name(value) {
-        this.#name = value;
-    }
-
     get work() {
         return this.#work;
-    }
-    set work(value) {
-        this.#work = value;
     }
     get concept() {
         return this.#concept;
     }
+    set id(value) {
+        this.#id = value;
+    }
+    set name(value) {
+        this.#name = value;
+    }
+    set work(value) {
+        this.#work = value;
+    }
     set concept(value) {
         this.#concept = value;
     }
+    /**
+     * @returns {boolean}
+     */
+    validate() {
+        return this.#id != 0 && this.#name && this.#work && this.#concept;
+    }
 }
 
-export { AuthorManager }
+export {AuthorManager}

@@ -31,7 +31,6 @@ class FormController extends ViewElement {
         button.innerText = "Küldés"
         form.appendChild(button);
         const resultDiv = document.createElement("div");
-        resultDiv.innerText = "Eredmény"
         this.div.appendChild(resultDiv);
         this.div.appendChild(form);
 
@@ -39,7 +38,15 @@ class FormController extends ViewElement {
             e.preventDefault();
             const element = this.#createElement();
             this.#manager.addElement(element);
+            e.target.reset();
         })
+
+        this.#manager.addElementResultCallback = (result) => {
+            resultDiv.innerText = result;
+            setTimeout(() => {
+                resultDiv.innerText = "";
+            }, 1500)
+        }
     }
     /**
      * @returns {import("./index.js").AuthorType}
