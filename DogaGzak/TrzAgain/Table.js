@@ -1,4 +1,4 @@
-import { ViewElement } from "./viewelement.js";
+import { ViewElement } from "./ViewElement.js";
 import {
     createTable,
     clearTbodyAndHandleEmptyList,
@@ -27,6 +27,7 @@ class Table extends ViewElement {
                 createTextTableCell(element.answers[2], tr);
                 createTextTableCell(element.answers[3], tr);
                 createTextTableCell(element.rightAnswer, tr);
+
             }
         }
 
