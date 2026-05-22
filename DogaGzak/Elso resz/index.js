@@ -1,21 +1,13 @@
-import data from './data.json' with {type: 'json'};
-
 import { NavigationBar } from './navigationbar.js';
 import { QuestionManager } from './questionmanager.js';
 import { Table } from './table.js';
-import { FormController } from './FormController.js';
-import { ImportExport } from './ImportExport.js';
+import data from './data.json' with {type: 'json'};
+
 
 const manager = new QuestionManager(data.questions);
 const navBar = new NavigationBar('main-nav');
 navBar.appendTo(document.body);
 
 const tableView = new Table('table-view', manager, data.tableHeader);
-const formView = new FormController('form-view', data.formFieldList, manager);
-const importExportView = new ImportExport('import-export-view', manager);
-
 navBar.addViewElement('Táblázat', tableView);
-navBar.addViewElement('Űrlap', formView);
-navBar.addViewElement('Import/Export', importExportView);
-
 navBar.navigate('table-view');

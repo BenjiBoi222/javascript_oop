@@ -14,7 +14,7 @@ class Table extends ViewElement {
         this.#manager = manager;
 
         const tbody = createTable(headerString, this.div);
-        this.#manager.renderCallback =(list) => {
+        this.#manager.renderCallback = (list) => {
             clearTbodyAndHandleEmptyList(tbody, list);
 
             for (const item of list) {
@@ -28,11 +28,10 @@ class Table extends ViewElement {
                 createTextTableCell(item.rightAnswer, tr);
             }
         }
-        
 
         this.activateCallback = () => {
-                this.#manager.getAllElement();
-        };
+            this.#manager.getAllElement();
+        }
     };
 }
 

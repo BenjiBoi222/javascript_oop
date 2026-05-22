@@ -4,7 +4,7 @@ import {
     clearTbodyAndHandleEmptyList,
     createRowForTbody,
     createTextTableCell
-} from "./gombszab.js";
+} from "../gombszab.js";
 
 class Table extends ViewElement {
     #manager;
@@ -14,26 +14,26 @@ class Table extends ViewElement {
         this.#manager = manager;
 
         const tbody = createTable(headerString, this.div);
-        this.#manager.renderCallback =(list) => {
+
+        this.#manager.renderCallback = (list) => {
             clearTbodyAndHandleEmptyList(tbody, list);
 
-            for (const item of list) {
+            for (const element of list) {
                 const tr = createRowForTbody(tbody);
 
-                createTextTableCell(item.question, tr);
-                createTextTableCell(item.answers[0], tr);
-                createTextTableCell(item.answers[1], tr);
-                createTextTableCell(item.answers[2], tr);
-                createTextTableCell(item.answers[3], tr);
-                createTextTableCell(item.rightAnswer, tr);
+                createTextTableCell(element.question, tr);
+                createTextTableCell(element.answers[0], tr);
+                createTextTableCell(element.answers[1], tr);
+                createTextTableCell(element.answers[2], tr);
+                createTextTableCell(element.answers[3], tr);
+                createTextTableCell(element.rightAnswer, tr);
             }
         }
-        
 
         this.activateCallback = () => {
-                this.#manager.getAllElement();
-        };
-    };
+            this.#manager.getAllElement();
+        }
+    }
 }
 
 export { Table };
